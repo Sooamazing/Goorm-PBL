@@ -1,0 +1,276 @@
+
+.content-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+}
+
+
+/* banner? */
+
+.content-container__header-main-poster{
+    height: 120%;
+    width: 100%;
+    object-fit: cover;
+    position: relative;
+}
+
+.content-container__header-main-poster img{
+    width: 100%;
+    height:500px;
+    object-fit: cover;
+    object-position: 20% 20%;
+}
+/* container가 아니라 요소를 직접... 크기를 조절해야 하는구나... */
+
+
+.content-container__header-main-text {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    left: 3%;
+    top: 50%;
+    transform: translateY(-50%);
+    gap: 10px;
+    text-overflow: ellipsis;
+}
+/* %가 누구 기준으로 되는 건지 좀 .... 알아야 하는데.. ㅠㅅ ㅠ... */
+.content-container__header-main-text .title {
+    font-size: 200%;
+    font-weight: 600;
+}
+
+.content-container__header-main-text button {
+    box-sizing: border-box;
+    margin: 0 0 0 8px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 2px;
+    color: var(--text); 
+    background-color: rgba(0,0,0,0.6); 
+    cursor: pointer;
+}
+/* 버튼의 색은 그대로, 배경색만 투명도 조절-> rgba */
+
+.content-container__header-main-text .description {
+    display: -webkit-box;
+    font-size: 100%;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+}
+/* 알아보기 > orident: vertical을 안 하면 3줄이 적용 안 됨.. 왜지?? 와...
+!?!?!??!?!?!????
+예시처럼 마지막줄은 중간부터 ...나오게 어떻게 하지? */
+
+.content-container__header-main-poster::after{
+    content: ' ';
+    position: absolute;
+    bottom: 0%;
+    width: 100%;
+    height: 40%;
+    left: 0;
+    right: 0;
+    background: linear-gradient(180deg,transparent 0, var(--body) 100%);
+}
+
+
+
+
+
+/* Genre Video Lines */
+
+.content-container__genrelist{
+    box-sizing: border-box;
+    padding: 3%;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    background-size: cover;
+}
+
+.content-container__genrelist .category{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.content-container__genrelist .category .category__name{
+    box-sizing: border-box;
+    align-items: center;
+}
+/* flexbox 없이 정렬된 거 맞나? 안 된 기분..? */
+
+.category__name a{
+    text-decoration: none;
+    color: inherit;
+    font-size: 20px;
+}
+
+.category__name a span{
+    font-size: 15px;
+    display: none;
+    margin-left: 2%;
+}
+
+.category__name a:hover span{
+    display: inline;
+}
+
+.category .category__content-set{
+    display: flex;
+    position: relative;    
+    gap: 3%;
+    white-space: nowrap;
+    overflow-x: auto;    
+}
+
+/* 아니... overflow-x 스크롤 바 안 보이게 어떻게 하더라..? ㅋ...*/
+
+/* 아래 위쪽 거의 걍... 중구난방인 듯 ㅠㅠㅠ 눈물.... 잘 이해하고 했는지 희미하다 ㅠㅠ */
+.category .category__content-set .content-set-num{
+    box-sizing: border-box;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}
+/* padding 넣어준 이유: hover 시 scale할 때 잘려서... 요소 크기 늘려주면 안 잘릴까 해서...ㅠㅠ */
+
+.content-set-num a{
+    box-sizing: border-box;
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    width: 10rem;
+    text-decoration: none;
+    color: inherit;
+    gap: 30%;
+
+}
+.content-set-num a .symbolandposter{
+    overflow: hidden;
+    object-fit: cover;
+}
+
+.content-set-num .symbolandposter:hover{
+    transform: scale(1.1);
+    transition: transform .5s;
+    z-index: 2;
+}
+
+/* ??!??!?!?!
+    hover하면 이 영역 밖을 벗어나면 잘리는데... 안 잘리게 못하나? 
+*/
+
+.symbolandposter .symbol{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    width: 18%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* z-index: 2; */
+}
+
+.symbolandposter .poster-image{
+    width: 10rem;
+    height: 15rem;   
+}
+
+.content-set-num a span{
+    margin: 5% 0 0 0;
+    text-align: center; 
+    white-space: pre-line; 
+}
+
+
+
+ /* 더 줄어들면 넷플로고가 N으로 바뀌는 것도 해 보고 싶다. */
+
+
+ /* blur 처리 아래 */
+
+ 
+
+
+.content-container .blurandmore::before{
+    background: linear-gradient(180deg,transparent 0, var(--body) 70%);
+    bottom: 0%;
+    content: ' ';
+    height: 40%;
+    left: 0;
+    /* pointer-events: none; */
+    position: absolute;
+    right: 0;
+}   
+
+.content-container .blurandmore::before{
+    bottom: 200px;
+    content: ' ';
+    height: 410px;
+    left: 0;
+    /* pointer-events: none; */
+    position: absolute;
+    right: 0;
+    backdrop-filter: blur(10px);
+}   
+/* 와 솔직히.. 하나도 모르겠음.... bottom, height 기준이 어딘지 부디 알고 싶다... backdrop-filter도.. ㅋㅋ... */
+
+@media (max-width:400px) {
+    content-container .blurandmore::before{
+        bottom: 300px;
+        height: 410px;
+    }   
+    .content-container .blurandmore::before{
+        bottom: 15%;
+        height: 20%;
+       }   
+}
+
+/* 이렇게 꼭 따로 설정해 줘야 함..? ㅠㅠ 그냥.... 한번에 작은 화면, 큰 화면 충족하는 px / % 같은 거 ㄴ? */
+
+.blurandmore .join-ad{
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.blurandmore .join-ad p{
+    text-align: center;
+    font-size: 17px;
+    word-break: keep-all;
+    max-width: 730px;
+}
+
+.blurandmore .join-ad p:first-child{
+    text-align: center;
+    font-size: 20px;
+    font-weight: 500;
+    margin: 10px;
+}
+
+.blurandmore .join-ad button{
+    font-size: 16px;
+    color: var(--text);
+    background-color: var(--primary);
+    padding: 10px 50px;
+    margin: 20px 0;
+    border: none;
+    cursor: pointer;
+}
+
+.join-ad button a{
+    text-decoration: none;
+    color: inherit;
+}
+
+.blurandmore .join-ad button:hover{
+    background-color: var(--secondary);
+}
