@@ -103,6 +103,13 @@
 }
 /* flexbox 없이 정렬된 거 맞나? 안 된 기분..? */
 
+.category__name {
+    text-decoration: none;
+    color: inherit;
+    font-size: 20px;
+}
+
+
 .category__name a{
     text-decoration: none;
     color: inherit;
@@ -292,15 +299,16 @@
 
 
 
-/* 재생 목록 넣으려다 실패, 추후에 다시 도전 */
+/* 재생 목록 넣으려다 실패, 추후에 다시 도전 
 
-/* 
+
 
 .playlist-icon {
     display: flex;
+    position: relative;
     justify-content: space-between;   
     width: 100px; 
-    height: 20px;
+    height: 200px;
 }
 
 .play-plus-good-set{    
@@ -313,12 +321,13 @@
     display: flex;
     position: relative;
     margin-left: 5%;
+    width: 100px;
 }
 
 .icon-and-border .incircle{    
     position: absolute;
     top: 100%;
-    /* 왜..? 100%여야 맞음..? 진짜 당황스럼다. */
+    /* 왜..? 100%여야 맞음..? 진짜 당황스럼다. 
     left: 50%;
     transform: translate(-100%);
     fill:white;    
@@ -326,10 +335,10 @@
 
 .icon-and-border .paly-bordercircle {
     stroke: white;
-    width: 100px;
+    width: 10px;
 }
 
-/* svg > border: stroke */
+/* svg > border: stroke 
 
  */
 
