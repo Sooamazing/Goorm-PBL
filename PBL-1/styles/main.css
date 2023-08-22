@@ -151,15 +151,26 @@
 
 }
 .content-set-num a .symbolandposter{
+    
+    display: flex;
     overflow: hidden;
     object-fit: cover;
 }
 
-.content-set-num .symbolandposter:hover{
-    transform: scale(1.1);
+.content-set-num a .symbolandposter:hover {
     transition: transform .5s;
     z-index: 2;
+    padding: 4px 0 4px 0;
+    transform: scale(1.1);
 }
+
+.content-set-num a .symbolandposter:hover ~ span{
+    margin: 2px 0 -10px 0;
+}
+
+/* 중요한 건 선택자 선택 시 단계별로 잘 선택해야 한다는 거지. ~는 형제요소 */
+
+
 
 /* ??!??!?!?!
     hover하면 이 영역 밖을 벗어나면 잘리는데... 안 잘리게 못하나? 
@@ -180,6 +191,10 @@
     width: 10rem;
     height: 15rem;   
 }
+
+
+
+
 
 .content-set-num a span{
     margin: 5% 0 0 0;
@@ -231,7 +246,7 @@
        }   
 }
 
-/* 이렇게 꼭 따로 설정해 줘야 함..? ㅠㅠ 그냥.... 한번에 작은 화면, 큰 화면 충족하는 px / % 같은 거 ㄴ? */
+/* relative-absolute 로 ::before, top 기준으로 설정할 수 있게 구현해 보기! 추후! */
 
 .blurandmore .join-ad{
     box-sizing: border-box;
@@ -274,3 +289,54 @@
 .blurandmore .join-ad button:hover{
     background-color: var(--secondary);
 }
+
+
+
+/* 재생 목록 넣으려다 실패, 추후에 다시 도전 */
+
+/* 
+
+.playlist-icon {
+    display: flex;
+    justify-content: space-between;   
+    width: 100px; 
+    height: 20px;
+}
+
+.play-plus-good-set{    
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.icon-and-border{
+    display: flex;
+    position: relative;
+    margin-left: 5%;
+}
+
+.icon-and-border .incircle{    
+    position: absolute;
+    top: 100%;
+    /* 왜..? 100%여야 맞음..? 진짜 당황스럼다. */
+    left: 50%;
+    transform: translate(-100%);
+    fill:white;    
+}
+
+.icon-and-border .paly-bordercircle {
+    stroke: white;
+    width: 100px;
+}
+
+/* svg > border: stroke */
+
+ */
+
+
+
+
+
+
+
+
