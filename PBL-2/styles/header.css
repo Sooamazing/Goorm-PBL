@@ -1,0 +1,137 @@
+header{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding:1rem 2rem;
+    
+}
+
+
+/* header-wrapper */
+
+header .header-wrapper {
+    display: flex;    
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    /* padding: 1rem 2rem;  */
+    margin-bottom: 1rem;
+    
+}
+
+.header-wrapper .logo{
+    color: var(--text-header);
+    font-size: 2.1rem;
+}
+
+.header-wrapper .createNewTodo{
+    font-size: 1rem;
+    text-decoration: underline;
+    color: var(--text-header);
+}   
+
+/* 상단 메뉴 hover */
+.header-wrapper .createNewTodo:hover {
+    color: var(--icon_hover);
+}
+
+
+
+
+/* Form-wrapper */
+
+/* toggle 시 입력 창 숨기고 보이기 */
+
+#form-wrapper.hidden {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    transition: var(--transition);
+    
+}
+#form-wrapper {
+    visibility: visible;
+    opacity: 1;
+    position: static;
+}
+
+
+/* todoForm  */
+
+#form-wrapper #todoForm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50lvw;
+    gap: .4rem;
+    padding: 0.3rem 0.3rem;
+    background-color: var(--list-background);
+    border-radius: var(--border-radius);
+    
+}
+
+#todoForm .taskInput {
+    flex-grow: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    background-color: transparent;
+    border: transparent;
+    padding: 0.8rem 1rem;
+
+}
+
+#todoForm .task{
+    flex-grow: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    word-break: break-all;
+
+}
+
+/* todoForm - button */
+
+#todoForm  button img {
+    width: 1.5rem;
+    filter: invert(25%) sepia(97%) saturate(531%) hue-rotate(318deg) brightness(114%) contrast(87%);
+}
+
+#todoForm button img:hover{
+    transform: scale(1);
+    filter: invert(26%) sepia(28%) saturate(4174%) hue-rotate(335deg) brightness(96%) contrast(95%);
+}
+
+#todoForm button img:active{
+    transform: scale(0.8);
+    filter: invert(26%) sepia(28%) saturate(4174%) hue-rotate(335deg) brightness(96%) contrast(95%);
+}
+
+
+/* media query 400, 900 설정, 400이하: font-size 변경 */
+
+
+@media (max-width:400px) {
+    header{
+        padding: 0.5rem 1rem;
+    }
+    .header-wrapper .logo{
+        font-size: 1.2rem;
+    }
+    .header-wrapper .createNewTodo{
+        font-size: 0.8rem;
+    }   
+}
+
+@media (min-width: 900px) {
+    header{        
+        width: 900px;
+        padding: 0.5em 1em;
+
+    }
+}

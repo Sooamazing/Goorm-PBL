@@ -1,0 +1,202 @@
+/* 메인, ul 기본 */
+
+main section #mainTodoList{
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50lvw;
+    gap: .4rem;
+    padding: 0.3rem 0.3rem;
+    background-color: var(--list-background);
+    border-radius: var(--border-radius);
+
+}
+
+ #mainTodoList .todos {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    justify-content: center;
+    height: 100%;
+    margin-bottom: 100px;
+}
+
+
+
+
+/* 입력 줄 1개 기준 */
+
+#mainTodoList {
+    width: 45lvw;
+}
+
+
+
+/* li 기본 설정 */
+.todos .todoLine {
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 15px;
+    padding: 0.3rem 0.5rem 0.3rem 1rem;
+    background-color: var(--list-background);
+    border-radius: var(--border-radius);
+
+}
+
+/* li 완료 시 */
+.todos .todoLine.complete{
+    background-color: var(--color-disabled);
+}
+
+
+
+
+
+
+/* input[checkbox] 기본 설정 */
+
+.todoLine input[type='checkbox'] {
+    appearance: none;
+    background-color: transparent;
+    margin: 0;
+    min-width: .8rem;
+    height: .8rem;
+    border: 1px solid var(--icon);
+    border-radius: 100%;
+    display: grid;
+    place-content: center;
+    transform: scale(1);
+    transition: var(--transition);
+}
+
+
+/* input - complete 
+before로 checkbox 안 ✓ 표시 나타나게 */
+
+.todoLine input[type='checkbox']::before {
+    content: '✓';
+    color: var(--icon);
+    transform: scale(0);
+    transition: var(--transition);
+} 
+.complete.todoLine input[type='checkbox']::before {
+    transform: scale(0.8);
+} 
+
+.todoLine.complete input[type='checkbox'] {
+    background-color: var(--icon-disabled);
+    border-color: var(--icon-disabled);
+}
+
+
+
+
+
+
+
+/* span 기본 */
+
+.todoLine .task{
+    flex-grow: 1;
+    max-width: 80%;
+    overflow: hidden;
+    white-space: nowrap; 
+    /* white-space : 한 줄 */
+    /* text-overflow: ellipsis; */
+    word-break: break-all;
+    padding: 1px;
+    border-radius: var(--border-radius);
+    transition: var(--transition)
+}
+
+.todos li span:focus{
+    background-color: var(--acitve-background);
+    color: var(--active-text);
+    outline: none;
+}
+
+.todos li sapn[contenteditable]:hover {
+    background-color: var(--acitve-background);
+}
+
+
+/* span 완료 시 */
+
+.todoLine.complete span{
+    text-decoration: line-through;
+    color: var(--text-disabled)    
+}
+
+
+
+
+
+
+
+/* 수정, 삭제 버튼 기본 */
+
+.todoLine .editAndDelete{
+    display: flex;
+}
+
+.todoLine .editAndDelete button {
+    display: grid;
+    place-content: center;
+    transition: var(--transition);    
+}
+
+.todoLine .editAndDelete button img {
+    width: 1rem;    
+    filter: invert(25%) sepia(97%) saturate(531%) hue-rotate(318deg) brightness(114%) contrast(87%);
+}
+
+.todoLine .editAndDelete button:hover{
+    filter: invert(23%) sepia(23%) saturate(4631%) hue-rotate(342deg) brightness(103%) contrast(85%);
+    transform: scale(1);
+}
+
+.todoLine .editAndDelete button:active{
+    filter: invert(23%) sepia(23%) saturate(4631%) hue-rotate(342deg) brightness(103%) contrast(85%);
+    transform: scale(.8);
+}
+
+/* 완료 시 수정 버튼만 동작 X */
+
+.todoLine.complete .editAndDelete button.edit-button img {
+    width: 1rem;    
+    /* filter: invert(0%) sepia(72%) saturate(0%) hue-rotate(46deg) brightness(94%) contrast(102%); */
+    /* filter: invert(48%) sepia(6%) saturate(4924%) hue-rotate(314deg) brightness(77%) contrast(94%); */
+    filter: invert(71%) sepia(69%) saturate(225%) hue-rotate(153deg) brightness(95%) contrast(87%);
+
+}
+.todoLine.complete .editAndDelete button.edit-button:hover{ 
+    filter: none;  
+}
+
+
+
+
+
+/* media query 400, 900 기준 section#mainTodoList 설정 변경 */
+
+
+@media (max-width:400px) {
+
+    main section#mainTodoList{
+        width: 50lvw;
+     }
+}
+
+@media (min-width: 900px) {
+
+    main section#mainTodoList{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 800px;
+     }
+}

@@ -1,0 +1,68 @@
+:root {
+    --primary: rgba(251,94,94,1);
+    --second: rgba(228,108,108,0.8);
+    --icon: #B24040;
+    --icon_hover: #B93232;
+    --text-header: #FFF;
+    --text-content: #323030;
+    --list-background: rgba(140, 210, 238, 0.9);
+    
+    --acitve-background: rgba(200, 229, 241, 0.9);
+    --active-text: #1a0430;
+
+    --color-disabled: rgba(130, 199, 226, 0.8);
+    --text-disabled: rgba(99, 103, 104, 0.9);
+    --icon-disabled: rgba(240, 159, 159,0.9);
+    --button-disabled: rgba(130, 199, 226, 0.8);
+
+    --border-radius: 6px;
+    --transition: all .2s ease-in-out;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    font-family: 'omyu_pretty';
+
+}
+
+@font-face {
+    font-family: 'omyu_pretty';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    width: 100%;    
+    height: 100%;  
+    min-height: 100lvh;  
+    background: linear-gradient(to bottom, var(--second) 0%, var(--primary) 100%)
+    
+}
+
+a, button, input {
+    cursor: pointer;
+}
+
+button {
+    border: 0;
+    background: transparent;
+    padding: .25rem;
+}
+
+input, span[contenteditable] {
+    outline: none;
+}
+
+ul {
+    list-style: none;
+}
+
+/* hover > 투명도 변화? */
