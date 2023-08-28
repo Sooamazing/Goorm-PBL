@@ -6,6 +6,7 @@ main section #mainTodoList{
     flex-direction: column;
     align-items: center;
     width: 50lvw;
+    max-width: 800px;
     gap: .4rem;
     padding: 0.3rem 0.3rem;
     background-color: var(--list-background);
@@ -187,16 +188,7 @@ before로 checkbox 안 ✓ 표시 나타나게 */
 @media (max-width:400px) {
 
     main section#mainTodoList{
-        width: 50lvw;
+        width: 70lvw;
      }
 }
 
-@media (min-width: 900px) {
-
-    main section#mainTodoList{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 800px;
-     }
-}
