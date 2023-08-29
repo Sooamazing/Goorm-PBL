@@ -66,3 +66,6 @@
 - 수정 시 수정 완료 버튼을 따로 눌러야만 수정 내용 반영되도록
 
 - 문자 입력 시 한글, 숫자는 연속 입력 가능, 영어는 안 됨 (input 자체의 특성) -> 가능하다면 연속 입력 가능하도록
+
+- 참조: https://www.youtube.com/watch?v=y71CdVq5SvI&t=729s
+    https://webdesign.tutsplus.com/to-do-app-with-vanilla-javascript--cms-35258t?utm_campaign=yt_tutsplus_y71CdVq5SvI&utm_content=description&utm_medium=referral&utm_source=youtube.com
