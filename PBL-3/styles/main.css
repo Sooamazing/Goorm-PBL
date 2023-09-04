@@ -1,0 +1,231 @@
+
+/* profile */
+/* profile을 grid로 하려면 어떻게 설정해야 함? */
+/* #profile {
+    display: grid;
+    grid-template-columns: .3fr 1fr;
+    margin: 1rem;
+    padding: 1rem;
+    border: var(--section-border);
+    gap: 1rem;
+} */
+
+#profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 1rem;
+    padding: 1rem;
+    border: var(--section-border);
+    /* max-height: 20rem;   
+    왜 얘를 설정하면 border는 위로 안 가고 그림만 커질까?  */
+  
+} 
+#profile .overalProfile{
+    display: flex;
+    margin: 1rem 1rem 0.2rem 1rem;
+    padding: 1rem;
+    border: var(--section-border);
+    gap: 1rem;
+    max-width: 100%;
+}
+#profile .overalProfile .profile{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    max-width: 30%;
+}
+
+#profile .overalProfile .profile img{
+    flex-grow: 0.8;
+    width: 100%;
+
+}
+
+#profile .overalProfile .profile a{
+    flex-grow: 0.2;
+    text-decoration: none;
+    width: 100%;
+}
+
+#profile .overalProfile .profile a button{
+    background-color: var(--primary);
+    color: var(--icon-text);
+    padding: 0.7rem 0;
+    width: 100%;    
+    border-radius: 10px;
+    font-weight: var(--icon-text-weight);
+}
+
+#profile .overalProfile .profileInfo{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    overflow-x: hidden;
+}   
+
+
+#profile .overalProfile .profileInfo .influence{
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    overflow-x: auto;
+}
+
+#profile .overalProfile .profileInfo .influence span{
+    padding:0.5rem 1rem;
+    color: var(--icon-text);
+    font-weight: var(--icon-text-weight);
+    border-radius: 10px;
+    white-space: nowrap;
+}
+
+#profile .overalProfile .profileInfo .influence .publicRepos{
+    background-color: var(--primary);
+}
+
+#profile .overalProfile .profileInfo .influence .publicGists{
+    background-color: var(--gray-icon);
+}
+
+
+#profile .overalProfile .profileInfo .influence .followers{
+    background-color: var(--green-icon);
+}
+  
+#profile .overalProfile .profileInfo .influence .following{
+    background-color: var(--sky-icon);
+}      
+
+#profile .overalProfile .profileInfo .personalInfo{
+    display: grid;
+    grid-template-columns: 1fr;
+    border: var(--section-border);
+    border-radius: 7px;
+}
+
+/* ... view profile이랑 위치 버튼이 아래로 조절하려면 그리드를 써야 하나?  */
+#profile .overalProfile .profileInfo .personalInfo p{
+    padding: 0.7rem 0.8rem;
+
+}
+
+#profile .overalProfile .profileInfo .personalInfo .website::before{
+    content: '';
+    display: block;
+    width: 200%;
+    border-top: var(--section-border);
+}
+
+#profile .greenary{
+    margin: 1rem;
+    padding: 1rem;
+    border: var(--section-border);
+    gap: 1rem;
+    max-width: 100%;
+    text-align: center;
+}
+
+#profile .greenary img{
+    max-width: 100%;
+    /* 왜 이게 없으면 삐져나가지? 오.. 진짜..의외... */
+}
+
+/* 위쪽에.. 사이사이에 줄 어떻게 넣지?  */
+/* 
+#profile .profileInfo .personalInfo .website{
+
+}
+
+#profile .profileInfo .personalInfo .location::before{
+
+}
+
+#profile .profileInfo .personalInfo .location{
+
+}
+
+#profile .profileInfo .personalInfo .memberSince::before{
+
+}
+
+#profile .profileInfo .personalInfo .memberSince{
+
+} */
+     
+
+
+/* Latest Repos */
+
+#latestRepos{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin: 1rem 1rem 3rem 1rem;    
+}
+
+#latestRepos h2{
+    font-size: 2rem;
+}
+
+#latestRepos #repos{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+#latestRepos #repos .repo{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    border-radius: 10px;
+    border: var(--section-border);
+    padding: 1rem;
+    /* max-width: 100%; */
+}
+/* grid로 한 건가? 1fr 1fr하고 star부터 시작?(뭔지는 모름..) */
+
+.repo .repoName a{
+    color: var(--primary);
+}
+
+.repo .subscriber{
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    overflow-x: auto;
+    /* max-width: 100%;  */
+    /* 이건 왜 안 되고 오버플로우를 해야 하는 거지? 너비와 빠져나가는 건 별개..? 너무 어렵다!!! 세상에...... ... 너비를 그럼 왜 지정하는 거야???? */
+}
+
+.repo .subscriber span{
+    padding:0.4rem 1rem;
+    color: var(--icon-text);
+    font-weight: var(--icon-text-weight);
+    border-radius: 10px;
+    white-space: nowrap;
+}
+
+.repo .subscriber .stars{
+    background-color: var(--primary);
+}
+
+.repo .subscriber .watchers{
+    background-color: var(--gray-icon);
+}
+
+.repo .subscriber .forks{
+    background-color: var(--green-icon);
+}
+
+
+/* footer */
+
+footer{
+    background-color: var(--gray-background);
+    padding: 1rem;
+    text-align: center;
+}
