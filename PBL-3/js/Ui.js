@@ -8,7 +8,7 @@ class Ui {
     }
 
     showProfile(user){
-       
+
         const profileMarUp = `
 <section class="overalProfile">
     <div class="profile">
@@ -45,7 +45,6 @@ class Ui {
 
     showrepos(repos){
         let reposMarUp = '';
-        //이걸 따로 한 이유가 있었따... 아래에서는 한번밖에 안 돼서 음... append로 하면 됐겠지만 우선... 나중에 다시 그렇게 구현하거나 해 봐야지.
 
         repos.forEach(repo => {
             // console.log(repo.html_url);
@@ -64,8 +63,6 @@ class Ui {
         // console.log(reposMarUp);
         this.repos.innerHTML = reposMarUp; 
     }
-
-    // 시간이 좀 나면.. 경고 띄우는 것도.... CSS... 해보자...
 
     showAlert(){
         this.profile.innerHTML = 'Not Found';

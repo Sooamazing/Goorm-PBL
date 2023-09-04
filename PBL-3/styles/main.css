@@ -1,14 +1,5 @@
 
 /* profile */
-/* profile을 grid로 하려면 어떻게 설정해야 함? */
-/* #profile {
-    display: grid;
-    grid-template-columns: .3fr 1fr;
-    margin: 1rem;
-    padding: 1rem;
-    border: var(--section-border);
-    gap: 1rem;
-} */
 
 #profile {
     display: flex;
@@ -16,11 +7,9 @@
     align-items: center;
     margin: 1rem;
     padding: 1rem;
-    border: var(--section-border);
-    /* max-height: 20rem;   
-    왜 얘를 설정하면 border는 위로 안 가고 그림만 커질까?  */
-  
+    border: var(--section-border); 
 } 
+
 #profile .overalProfile{
     display: flex;
     margin: 1rem 1rem 0.2rem 1rem;
@@ -106,10 +95,8 @@
     border-radius: 7px;
 }
 
-/* ... view profile이랑 위치 버튼이 아래로 조절하려면 그리드를 써야 하나?  */
 #profile .overalProfile .profileInfo .personalInfo p{
     padding: 0.7rem 0.8rem;
-
 }
 
 #profile .overalProfile .profileInfo .personalInfo .website::before{
@@ -130,7 +117,6 @@
 
 #profile .greenary img{
     max-width: 100%;
-    /* 왜 이게 없으면 삐져나가지? 오.. 진짜..의외... */
 }
 
 /* 위쪽에.. 사이사이에 줄 어떻게 넣지?  */
@@ -154,7 +140,7 @@
 #profile .profileInfo .personalInfo .memberSince{
 
 } */
-     
+
 
 
 /* Latest Repos */
@@ -184,9 +170,7 @@
     border-radius: 10px;
     border: var(--section-border);
     padding: 1rem;
-    /* max-width: 100%; */
 }
-/* grid로 한 건가? 1fr 1fr하고 star부터 시작?(뭔지는 모름..) */
 
 .repo .repoName a{
     color: var(--primary);
@@ -197,8 +181,6 @@
     gap: 4px;
     align-items: center;
     overflow-x: auto;
-    /* max-width: 100%;  */
-    /* 이건 왜 안 되고 오버플로우를 해야 하는 거지? 너비와 빠져나가는 건 별개..? 너무 어렵다!!! 세상에...... ... 너비를 그럼 왜 지정하는 거야???? */
 }
 
 .repo .subscriber span{
@@ -220,6 +202,12 @@
 .repo .subscriber .forks{
     background-color: var(--green-icon);
 }
+
+
+
+
+
+
 
 
 /* footer */

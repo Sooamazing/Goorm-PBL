@@ -10,7 +10,6 @@ header{
     color: var(--icon-text);
     font-weight: bold;
 }
-/* font-weight가 적용 안 되는 이유 뭐임? */
 
 
 /* nav -searchBar*/
@@ -42,15 +41,24 @@ header{
 #searchForm #submitsform {
     padding: 0.7rem 0.8rem;
     border: 1px solid var(--gray-line) ;
-    display: grid;
-    place-content: center;
+    display: flex;
+    gap: 0.5rem;
     width: 100%;
+    position: relative;
 }
 
 #submitsform #inputSearch {
-    /* border-color: transparent; */
+    
     width: 100%;
-    right: 0;
-    left: 0;
-    /* input 길이를 끝까지 늘리고 싶은데 왜 안 되지? */
+    padding: 1rem;
+    border: transparent;
+    border-radius: 5px;
+}
+
+#submitsform #searchBtn{
+    background-color: var(--primary);
+    color: var(--icon-text);
+    border: var(--section-border);
+    border-radius: 5px;
+    padding: 0.5rem;
 }
