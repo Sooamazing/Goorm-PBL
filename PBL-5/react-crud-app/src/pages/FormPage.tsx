@@ -4,75 +4,99 @@ import ExpensesList from "../components/ExpensesList";
 import Calculator from "../components/Calculator";
 import { Expenses } from "../Types";
 
+//로컬스토리지 이용, 저장된 값 불러오기
 const initialExpenses = JSON.parse(localStorage.getItem("Expenses")) || [];
 
-// 특히 수정할 때 에러!
-//Cannot read properties of undefined (reading 'id')
-//TypeError: Cannot read properties of undefined (reading 'id')
-//첫 값이.. 잘 안 되는 건 진짜 왜일까.. 로컬스토리지 하면서 뭔가 바뀐 건가...
+//... ㅠㅠ shop 파일은 왜 안 될가요 ㅠㅠ 엉엉... ㅠㅠ 이걸 보면서 해야 뭘.... 가늠을 하고 공부를 할 텐데 눈물...
+//JSX? 얘는 왜 꼭 return에서 뭘로 감싸줘야 한다는 걸까? provider도 .. 진짜.... 뭔 소린지 잘 모름...
+//SummaryPage에서 optionRender는 왜 초기화해 주는 부분은 없는 거지? .. 어렵다 어려워.. render... 에 따르 거겠지? ... 으음.... 근데 여긴 useEffect가 없는데.. 오.. 뭐지...
+
+/**
+ * 구현할 때 TDD로 보여주시나요? 해 보고 싶었는데... 구현하는 것도 어려워서 실패.... 보통 구현을 어떻게 할지 생각하고 TDD를 같이 짜는 거죠? ..으음.. 안 짜봐서 뭐가 먼저고 어쩌구인지 상상이 어렵.
+ *
+ *
+ * 알람 배너 확인.. 왜 저기에.. 저게 들어가면..? ...
+ * // ....왜 여기에... setClickBtn(false) 넣으면... 되는 거지...? 충격... 와.. 뭐임... 순서가 어떻게 되는 거지? ..... 아..... 맨 처음에 이걸 시행하는데 setTimeout이라 2초 후에 false되는 거지!?!?!?
+ * //clickBtn 왜 경고 뜸?
+ *
+ * ...key라는 변수 이름은... 고유값인 거임? 근데 왜... 아무 ... 경고도 안 띄워주냐~~~..하. .ㅋ.. key 변수 설정했다가 어쩐지.. 알림이 안 되더라... ㅠㅠ....내 시간.....엉엉....  keyword라고 진짜 혹시나.. 마지막에 고쳐서야....
+ *===> 다시 확인해 보자. 콘솔로그에.. 알림이 뜨네요.. 이거때문일 줄은 몰랐는데..... 핳ㅎㅎㅎ
+ *
+ * localstorage 초기값 불러오는 걸 컴포넌트 바깥에 선언한 이유?
+ *
+ *
+ *e.target["category"].value 같은 식으로 말고! 뭔가 좀 더 동적으로..?
+ *
+ * - 현재 수정 버튼 누르기만 하면 수정이라고 뜸! => 실제로 수정 버튼 누르고 제출했을 때 알람이 나오게 하려면 어떻게.. 그냥 입력과 수정 입력과 차이를 주지? (+수정할 때는 blur돼도 저장)
+ *- 버튼 클릭 시마다 알람이 나오게 하려면.. 함수를 어떻게 짜야 하지..?
+ *...ㅠㅠㅠ... 두 개... onClick 함수 주는 거 어떻게 하지..? ㅠㅠ
+ *
+ * google icon 이용
+ * onChange 및 defaultValue 활용
+ *
+ */
+
 function FormPage() {
   const [expenses, setExpenses] = useState<Expenses[]>(initialExpenses);
-  //왜 useState를 이 안의 함수 내에서 선언하면 안 되지?
   const [keyword, setKeyword] = useState("");
-  //...key는... 고유값인 거임? ..하. .ㅋ.. key 변수 설정했다가 어쩐지.. 알림이 안 되더라... ㅠㅠ....내 시간.....엉엉....  keyword라고 진짜 혹시나.. 마지막에 고쳐서야....
   const [newEditValue, setNewEditValue] = useState<Expenses>();
-  const [moneyValue, setMoneyValue] = useState("");
-  const [categoryValue, setCategoryValue] = useState("");
+  const [mode, setMode] = useState("CREATE");
+  const [clickBtn, setClickBtn] = useState(false);
 
-  //제출하고 비워주는 걸 .. 어떻게 햐야 하나.
-  //....첫 입력이 ... newExpenses 반영이 안 된다!!!! => 무조건 onChange 해야 하는 건가? ...어떻게 해야 할지 모르겠음.. 도대체 왜~
-
+  //입력 버튼 클릭 시 생성/수정 모드에 따라 다름
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
 
+    let tempNode = mode;
+
     if (e.target["category"].value === "" || e.target["money"].value === "") {
-      //다시 입력해 달라고 할 때 keyword 말고 뭘 디펜ㄴ던시로 줘야.. 계속 눌러도 계속 알림 나오게 할 수 있나?
+      setClickBtn(true);
       setKeyword("RETRY");
       return;
     }
 
-    // setCategory(e.target["category"].value);
-    // setMoney(parseInt(e.target["money"].value));
+    //수정하려고 올려놓은 걸 저장 안 누르고 삭제하면(DELETE 후) CREATE로 만들기
+    if (keyword === "DELETE") {
+      tempNode = "CREATE";
+    }
 
-    const newExpenses: Expenses = {
-      id: Date.now(),
-      category: e.target["category"].value,
-      //ㅋ.. 설마했는데.. 아놔 ㅋ parseInt 말고는 없나?
-      money: parseInt(e.target["money"].value),
-    };
+    //생성 시
+    if (tempNode === "CREATE") {
+      const newExpenses: Expenses = {
+        id: Date.now(),
+        category: e.target["category"].value,
+        money: parseInt(e.target["money"].value),
+      };
 
-    console.log(1, expenses);
-    console.log(1, newExpenses);
+      const temp = [...expenses, newExpenses];
+      setExpenses(temp);
 
-    //이게 대체 왜 안 될까? .... 처음에 딱 안 되는데 왜지....
-    // setExpenses([...expenses, newExpenses]);
-    //비동기 어쩌구 함수 주라길래... 함수로 만들었는데도 왜..... ㅠㅠ
-    // setExpenses((prev) => {
-    //   return [...prev, newExpenses];
-    // });
+      localStorage.setItem("Expenses", JSON.stringify(temp));
+      setClickBtn(true);
+      setKeyword("CREATE");
+    } else if (tempNode === "EDIT") {
+      //이때 버튼 누르면 리스트 내역에서 바뀌게.
 
-    //... 이렇게 하는데.... 계속 제출 눌러보면.. 그래도... 한 개를... 저장을 못하네 temp에 2개 있어도 Expenses에서 1개만 저장함.. 왜임..?
-    const temp = [...expenses, newExpenses];
-    setExpenses(temp);
-    console.log(2, temp);
-    console.log(2, expenses);
-    console.log(2, newExpenses);
-    localStorage.setItem("Expenses", JSON.stringify(expenses));
-    // localStorage.setItem(
-    //   "Expenses",
-    //   JSON.stringify([...expenses, newExpenses])
-    // );
-    setKeyword("CREATE");
-    // console.log(e.target["category"]);
-    // console.log(key);
+      const newSetEditValue: Expenses = expenses.find(
+        (it) => it.id === newEditValue.id
+      );
+      // console.log("edit" + newSetEditValue);
+      // console.log("edit" + tempNode);
+      newSetEditValue.category = e.target["category"].value;
+      newSetEditValue.money = parseInt(e.target["money"].value);
+
+      localStorage.setItem("Expenses", JSON.stringify(expenses));
+      setClickBtn(true);
+      setKeyword("EDIT");
+      setMode("CREATE");
+    }
+
     e.target["category"].value = " ";
     e.target["money"].value = null;
     e.target["category"].focus();
   };
 
-  //각 수정, 삭제 함수가 List 파일에 있어도 동작하나? 근데 그건.. 그럼 어떻게 만들어야 하는 거지?
-  //...아니.. 하.. ㅋ... 왜.......as HTMLInputElement 이거 해 줘야 함?(생각해 보니 타입 단언이네.. 왜지? null이 되기라도 하나?) 아니 그냥 찍으면 input이라는데 왜 .value가 안 되는 걸까?
-  //edit -> 아무것도 안 변했으면 그냥 그대로 목록에 남아있게 만들고 싶음! 수정할 때 입력하는 거랑 그냥 입력하는 것의 차이를 어떻게 둬야 할지 모르겠음! 수정할 때는 blur돼도 저장하게 하고 싶은데!
+  // Edit 버튼 클릭 시 해당 내용이 input으로 가고 목록에서 사라짐.
   const handleEditClick = (e) => {
     const targetId = e.target.closest("li").id;
     const $categoryInput = document.getElementById(
@@ -82,65 +106,68 @@ function FormPage() {
     const $categorySpan = e.target.closest("li").firstChild;
     const $moneySpan = $categorySpan.nextSibling;
 
-    // console.log($categoryInput.value);
-    // $category.setAttribute("value", "");
-
     $categoryInput.value = $categorySpan.innerText;
     $moneyInput.value = $moneySpan.innerText;
-    setNewEditValue(expenses.find((it) => it.id == targetId));
 
-    editUpdate();
+    setNewEditValue(expenses.find((it) => it.id === parseInt(targetId)));
 
-    function editUpdate() {
-      setExpenses(expenses.filter((it) => it.id != newEditValue.id));
-
-      localStorage.setItem("Expenses", JSON.stringify(expenses));
-    }
-
-    setKeyword("EDIT");
+    setMode("EDIT");
   };
 
+  //한 개 삭제
   const handleDeleteClick = (e) => {
-    //...wow... type이 다르가 봐... !==하니까 안 되는데... 아니 왜?... 하..ㅋ 설마설마했는데 ㅠ... list에서 id 가져오는 건 왜 string이지..? id는 자동으로 string으로 저장되는 건가?
-    //ㅋ... e.target.closest("li").id 이거 말고.. 좀 더... ㅠ 세련되게 표현 ㄴ? 하.. 어렵다 어려워....
-    setExpenses(expenses.filter((it) => it.id != e.target.closest("li").id));
+    const targetId = e.target.closest("li").id;
+    const DeleteExpenses: Expenses[] = expenses.filter(
+      (it) => it.id !== parseInt(targetId)
+    );
+    setExpenses(DeleteExpenses);
+    console.log(DeleteExpenses);
 
-    localStorage.setItem("Expenses", JSON.stringify(expenses));
+    localStorage.setItem("Expenses", JSON.stringify(DeleteExpenses));
 
     //string
-    console.log(typeof e.target.closest("li").id);
+    // console.log(typeof e.target.closest("li").id);
     //number
-    console.log(typeof expenses[0].id);
+    // console.log(typeof expenses[0].id);
+    setClickBtn(true);
     setKeyword("DELETE");
   };
 
+  // 전체 삭제
   const handleDeleteAllClick = () => {
     setExpenses([]);
     localStorage.clear();
+    setClickBtn(true);
     setKeyword("DELETE");
   };
 
-  // const handleCategoryChange = (e) => {
-  //   setCategoryValue(e.target.value);
-  //   return e.target.value;
-  // };
-  // const handleMoneyChange = (e) => {
-  //   setMoneyValue(e.target.value);
-  //   return e.target.value;
+  //alert true-false
+  // const handleAlertBoolean = () => {
+  //   setClickBtn(true);
+  //   setClickBtn(false);
   // };
 
-  // useEffect를 어떻게 써야 할지 모르겠다...
-  useEffect(() => {
-    console.log(">>>>>>" + expenses);
-  }, [expenses]);
-  // form...event타입을 알아낸 건 정말 장하다.. onSubmit으로 form으로 지정하면 그 안 input에는 다 접근 가능한 거랑 target[].value 사용하는 거...
+  //배열인 경우...똑같은 배열이라도 다른 값으로 인식할 수 있음. -> 추가 공부하기
+  useEffect(() => {}, [expenses]);
+
   return (
     <div>
       <div className="Container">
-        <AlertBanner keyword={keyword} expenses={expenses} />
+        <AlertBanner
+          keyword={keyword}
+          expenses={expenses}
+          clickBtn={clickBtn}
+          setClickBtn={setClickBtn}
+        />
         <h2>예산 계산기</h2>
         <article className="BudgetCalculatorForm">
-          <form onSubmit={handleSubmit} className="BudgetInput">
+          <form
+            onSubmit={(e) => {
+              handleSubmit(e);
+              setClickBtn(true);
+            }}
+            className="BudgetInput"
+          >
             <div className="expensesCategory">
               <label htmlFor="category">지출 항목</label>
               <input
@@ -148,10 +175,6 @@ function FormPage() {
                 name="category"
                 className="expensesCategoryValue"
                 type="text"
-                // onChange... 대체 뭔 언제 어떻게 활용하는 거지...
-                // onChange={handleCategoryChange}
-                //...ㅋ... defaultValue도.. 의미없어...
-                // defaultValue={categoryValue || ""}
               />
             </div>
             <div className="expensesMoney">
@@ -161,8 +184,6 @@ function FormPage() {
                 name="money"
                 className="expensesMoneyValue"
                 type="number"
-                // onChange={handleMoneyChange}
-                // defaultValue={moneyValue || ""}
               />
             </div>
             <div className="expensesBtn">

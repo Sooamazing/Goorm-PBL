@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Expenses } from "../Types";
 
-//..ㅋ... 그치.. 여기서... 음.. props 내려주는 걸로는.. 못 바꾸는.. 거지? 그래서.. ㅠㅠ setNewExpense([...expenses, newExpenses]); 이거 안 되는 거 맞?
 function InputForm(expenses) {
   const [newExpense, setNewExpense] = useState<Expenses[]>(expenses);
 

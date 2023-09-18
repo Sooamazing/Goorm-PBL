@@ -2,14 +2,26 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-size: 20px;
 }
 
 body {
   background-color: lightblue;
 }
 
+/* li 왜.. background-color 설정 안 하면 투명이지? 투명으로 설정한 건 없는데? input 배경만 transparent인데...? */
 li {
   list-style: none;
+  background-color: whitesmoke;
+  transition: opacity 200ms linear 100ms, left 200ms 200msl;
+}
+
+li:hover {
+  /* why border-color, padding 안 돼? */
+  outline: 1px solid black;
+  padding: 100rem;
+  transform: scale(1.2);
+  font-size: 1.5rem;
 }
 
 button {
@@ -49,7 +61,9 @@ input:focus {
 
 /* Content Container */
 .Container {
-  margin: 10%;
+  margin: 3rem auto;
+  width: 80lvw;
+  max-width: 30rem;
 }
 
 /* 경고 메시지 */
@@ -58,9 +72,9 @@ input:focus {
   background-color: rgba(0, 0, 0, 0.6);
   color: white;
   text-align: center;
-  padding: 0.5rem;
+  padding: 1rem;
   border-radius: 5px;
-  margin-bottom: 10px;
+  margin-bottom: 2rem;
   transition: opacity 200ms linear 100ms, left 200ms 200ms;
 }
 
@@ -76,10 +90,15 @@ input:focus {
   background-color: rgba(250, 7, 7, 0.728);
 }
 
+.alertMessage.RETRY {
+  background-color: rgba(154, 29, 119, 0.6);
+}
+
 /* 출력 부분 Form 전체*/
 
 h2 {
   margin: 0.5rem 0;
+  font-size: 1.5rem;
 }
 
 /* 출력 부분 Form*/
@@ -153,15 +172,23 @@ h2 {
   border: 1px solid gray;
   padding: 0.5rem;
   border-radius: 3px;
+  /* width: 100%; */
 }
 
 .BudgetLists .BudgetList {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 1fr 0.2fr;
   align-items: center;
   border: 1px solid gainsboro;
   padding: 0.5rem;
   border-radius: 3px;
+  /* width: 100%; */
+}
+.BudgetList > span {
+  white-space: nowrap;
+  overflow: hidden;
+  margin-right: 1rem;
+  text-overflow: ellipsis;
 }
 
 .BudgetList .BudgetListBtn {
@@ -171,7 +198,14 @@ h2 {
 
 /* 총 지출 출력 */
 .BudgetTotal {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: right;
+}
+
+.BudgetTotal span {
   font-size: 2rem;
   font-weight: bold;
   text-align: right;
+  color: darkblue;
 }

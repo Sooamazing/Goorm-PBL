@@ -1,25 +1,25 @@
 import { useEffect, useState } from "react";
 
-//key가 안 받아와 지는 상태 ㅠㅠ - ㅋ.. 해결......key XX...
-//key, keyKorean 초기화도 하고, 알람 없으면 아예 없애는 것도.. 어떻게..?
-const AlertBanner = ({ keyword, expenses }) => {
-  // const [keyKorean, setKeyKorean] = useState("");
+const AlertBanner = ({ keyword, expenses, clickBtn, setClickBtn }) => {
   const [alert, setAlert] = useState(true);
   let keyKorean = "";
-  // console.log(1, keyKorean);
+  // const tempClickBtn = clickBtn;
+
+  // console.log(tempClickBtn);
 
   useEffect(() => {
+    // ....왜 여기에... setClickBtn(false) 넣으면... 되는 거지...? 충격... 와.. 뭐임... 순서가 어떻게 되는 거지? ..... 아..... 맨 처음에 이걸 시행하는데 setTimeout이라 2초 후에 false되는 거지!?!?!?
     let timer = setTimeout(() => {
       setAlert(false);
+      setClickBtn(false);
     }, 1000);
     return () => {
       clearTimeout(timer);
       setAlert(true);
     };
-  }, [expenses, keyword]);
-
-  //fall through: break ^^....
-  //^^.... 수정, 삭제를.... 단어를 다르게 넣었네 어쩐지.. ^^.. 왜 오류나나 했네.....^^
+    //clickBtn 왜 경고 뜸?
+    //useEffect에서 dependency 사용보다 그냥 그 버튼에 함수 넣어주는 걸로 구현하는 게 더 좋음. (버튼을 누를 때마다 이벤트 발생하고 싶다면)
+  }, [clickBtn]);
 
   switch (keyword) {
     case "CREATE":
@@ -38,14 +38,13 @@ const AlertBanner = ({ keyword, expenses }) => {
       break;
   }
 
-  // console.log(keyKorean);
   if (keyKorean === "") {
     return;
   }
-  //keyword 글자...를 넣고 싶은데 ㅠㅠ [object object]로 들어감.. ㅠㅠ 어째야 하지...?
-  //..^^.. keyword는.. 이미 . "" 니까 그냥 넣으면 되는 거였음... {} 이렇게 감싸지 말고.. 어쩐지...
-  return alert === true ? (
-    <div className={"alertMessage" + " " + keyword}>{keyKorean}</div>
+  // setClickBtn(false);
+
+  return alert === true && clickBtn ? (
+    <div className={"alertMessage " + keyword}>{keyKorean}</div>
   ) : null;
 };
 

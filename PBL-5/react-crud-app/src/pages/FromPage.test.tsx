@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
-import FormPage from "./FormPage";
-import Calculator from "../components/Calculator";
+// import FormPage from "./FormPage";
+// import Calculator from "../components/Calculator";
 
 // test("합계 계산", ()=>{
 //   render(<Calculator />);
