@@ -4,6 +4,10 @@ public class Cart {
     
     private HashMap<Product,Integer> items = new HashMap<>();
 
+    public HashMap<Product, Integer> getItems() {
+        return items;
+    }
+
     public void showItems(){
 
         //상품이름, 각 상품 개수 출력

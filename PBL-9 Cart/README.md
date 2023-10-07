@@ -27,16 +27,19 @@
     - equals() 및 hashCode() 함수 override 
   - Cart: items 보유, 두 개 이상의 상품을 담을 수 있어야 함. (ex. 바나나 2개, 블루베리 3개)
     - 메서드: showltems, addProduct, removeProduct
+- CSV 파일로 상품 목록 받아오기
+
 ### 기타 목표
 - HashMap, HashSet 제대로 알기
 - 예외 처리 잘하기
+- buffer 사용법 익히기
 
 ## 기록
 ### 배운 점(어려웠지만 해냄)
 - HashSet의 타입으로 사용하려면 equals, hashCode를 @Override해야 함.
 - key를 순차적으로 늘리고 싶어서 이전에 책으로 자바 공부했을 때 static으로 id 설정했던 것처럼 해 보고 싶었음 -> 못 찾아서 검색으로 해결
   -  static firstkey=1, final key, key==firstkey++ 설정
-- HashSet, HashMap의 차이점 정확하게 알기
+- 파일 받아오기는 br을 이용하면 됨, try-catch 문 사용해 오류 방지, CSV로 받아오기 중 br 이용은 코드를 붙였지만, 타입 변환하고 이용하는 건 직접 작성. 
    
 ### 개선하고 싶은 점
 - key의 변수명을 좀 더 직관적으로 변경 혹은 해당 방법 아니고도 unique하게 id 주기
@@ -46,6 +49,8 @@
 ### 더 배우고 싶은 점
 - equal의 파라미터는 Object만인가?
 - 카트에 삭제하려는 상품이 없는 경우는 Map 자체에서 오류나는 거 같아서 따로 구현 안 했는데, 해야 하나?
+- buffer 사용, 이제는 미루면 안 된다.
+- HashSet, HashMap의 차이점 정확하게 알기
 
 ### 스스로 칭찬하기
 - 와 뚝딱뚝딱! 3뽀모 만에 완성! 오예!
@@ -58,3 +63,4 @@
 ### 참고
 - 오버라이드 참조: https://inpa.tistory.com/entry/JAVA-%E2%98%95-equals-hashCode-%EB%A9%94%EC%84%9C%EB%93%9C-%EA%B0%9C%EB%85%90-%ED%99%9C%EC%9A%A9-%ED%8C%8C%ED%97%A4%EC%B9%98%EA%B8%B0  
 - firstkey, key 설정하는 법 참고: https://itecnote.com/tecnote/java-how-to-write-a-static-class-that-has-an-id-with-a-string-in-it/ 
+- readCSV: https://jeong-pro.tistory.com/70
