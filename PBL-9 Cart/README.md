@@ -36,6 +36,7 @@
 - HashSet의 타입으로 사용하려면 equals, hashCode를 @Override해야 함.
 - key를 순차적으로 늘리고 싶어서 이전에 책으로 자바 공부했을 때 static으로 id 설정했던 것처럼 해 보고 싶었음 -> 못 찾아서 검색으로 해결
   -  static firstkey=1, final key, key==firstkey++ 설정
+- HashSet, HashMap의 차이점 정확하게 알기
    
 ### 개선하고 싶은 점
 - key의 변수명을 좀 더 직관적으로 변경 혹은 해당 방법 아니고도 unique하게 id 주기

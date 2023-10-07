@@ -1,0 +1,217 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 20px;
+}
+
+body {
+  background-color: lightblue;
+}
+
+/* li 왜.. background-color 설정 안 하면 투명이지? 투명으로 설정한 건 없는데? input 배경만 transparent인데...? */
+li {
+  list-style: none;
+  background-color: whitesmoke;
+  transition: opacity 200ms linear 100ms, left 200ms 200msl;
+}
+
+li:hover {
+  /* why border-color, padding 안 돼? */
+  outline: 1px solid black;
+  padding: 100rem;
+  transform: scale(1.2);
+  font-size: 1.5rem;
+}
+
+button {
+  border: none;
+  background-color: aquamarine;
+  padding: 0.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: rgb(18, 230, 160);
+  transform: scale(1.2);
+  font-weight: bold;
+}
+
+button:active {
+  transform: scale(0.8);
+}
+
+input {
+  border: none;
+  border-bottom: 1px solid black;
+  background-color: transparent;
+  width: 100%;
+  padding: 1rem;
+}
+
+/* ...focus되면 왜 커짐..?... 어떤 속성인 거지? 당황 rem으로 주로 설정하는 것 때문인가?... 그럼 사이즈는 똑같이 하고 싶으면 어떻게? .... px로 해 줘야 하는 건가.*/
+
+input:focus {
+  background-color: rgb(198, 233, 233);
+  font-weight: 600;
+  font-size: large;
+  padding: 0.7rem;
+}
+
+/* Content Container */
+.Container {
+  margin: 5rem auto;
+  width: 80lvw;
+  max-width: 30rem;
+}
+
+/* 경고 메시지 */
+
+.alertMessage {
+  position: absolute;
+  top: 1rem;
+  left: 50%;
+  color: white;
+  /* absolute 안 쓰고 동적으로 설정하는 걸 더 권장 */
+  width: 80%;
+  padding: 0.7rem 1rem;
+  border-radius: 5px;
+  text-align: center;
+  white-space: nowrap;
+  transform: translate(-50%, 0);
+  transition: opacity 200ms linear 100ms, left 200ms 200ms;
+  z-index: 1;
+}
+
+.alertMessage.CREATE {
+  background-color: rgba(19, 17, 150, 0.6);
+}
+
+.alertMessage.EDIT {
+  background-color: rgba(31, 170, 26, 0.6);
+}
+
+.alertMessage.DELETE {
+  background-color: rgba(250, 7, 7, 0.728);
+}
+
+.alertMessage.RETRY {
+  background-color: rgba(154, 29, 119, 0.6);
+}
+
+/* 출력 부분 Form 전체*/
+
+h2 {
+  margin: 0.5rem 0;
+  font-size: 1.5rem;
+}
+
+/* 출력 부분 Form*/
+
+.BudgetCalculatorForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: whitesmoke;
+  padding: 1rem;
+  border-radius: 10px;
+  margin-bottom: 0.5rem;
+  gap: 10px;
+}
+
+/* 출력 부분 Form*/
+
+.BudgetInput {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  border: 1px solid gray;
+  border-radius: 3px;
+  padding: 1rem;
+}
+
+.BudgetInput .expensesCategory {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+  flex-grow: 1;
+  /* justify-content: center; */
+}
+
+.BudgetInput .expensesMoney {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+  flex-grow: 1;
+}
+
+.BudgetInput .expensesBtn {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+/* 생성 리스트 하단 */
+.ListsAndBtn {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: 1px solid gray;
+  padding: 0.5rem;
+  border-radius: 3px;
+}
+/* 모두 지우는 버튼 */
+.deleteAllBtn {
+  text-align: right;
+}
+
+/* 생성된 리스트 */
+
+.BudgetLists ul {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: 1px solid gray;
+  padding: 0.5rem;
+  border-radius: 3px;
+  /* width: 100%; */
+}
+
+.BudgetLists .BudgetList {
+  display: grid;
+  grid-template-columns: 1fr 1fr 0.2fr;
+  align-items: center;
+  border: 1px solid gainsboro;
+  padding: 0.5rem;
+  border-radius: 3px;
+  /* width: 100%; */
+}
+.BudgetList > span {
+  white-space: nowrap;
+  overflow: hidden;
+  margin-right: 1rem;
+  text-overflow: ellipsis;
+}
+
+.BudgetList .BudgetListBtn {
+  display: flex;
+  gap: 8px;
+}
+
+/* 총 지출 출력 */
+.BudgetTotal {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: right;
+}
+
+.BudgetTotal span {
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: right;
+  color: darkblue;
+}

@@ -1,0 +1,33 @@
+:root{
+    --primary: #db0510;
+    --secondary: #e50914;
+    --border: #888;
+
+    --text: #fff;
+    --describe: #737373;
+
+    --body: #181818;
+}
+* {
+    margin:0;
+    padding: 0;
+}
+body {
+    background-color: var(--body);
+    color: var(--text);
+    flex-direction: column;
+    overflow-y: auto; 
+    -webkit-font-smoothing: antialiased;
+}
+/* 
+flex-direction: column은 스크롤하며 내려가기 때문에 이렇게 해주는 거 맞?
+overflow-y 다시 공부! 왜 해주는 거지? 
+    -webkit-font-smoothing: antialiased; 이게 뭘까^^? ㅋ..ㅋㅋㅋㅋ....
+
+*/
+
+img {
+    max-width: 100%
+}
+/* max-width: 100% 아무리 커져도 화면보다는 안 넘게 하려는 거 맞지? */
+

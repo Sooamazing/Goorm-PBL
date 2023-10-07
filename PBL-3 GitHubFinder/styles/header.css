@@ -1,0 +1,64 @@
+
+/* header */
+
+header{
+    background-color: var(--primary);
+    padding: 0.8rem;
+}
+
+.headerBlue .logo{
+    color: var(--icon-text);
+    font-weight: bold;
+}
+
+
+/* nav -searchBar*/
+
+#searchForm{
+
+    display: flex;
+    flex-direction: column;
+    margin: 1rem;
+    padding: 1rem;
+    border: 1px solid var(--gray-line);
+    gap: 0.7rem;
+    /* border-color: var(--gray-icon);
+    border-width: 1px; */
+    /* 왜 border 컬러 위드만 하면 안 보여? */
+    
+}
+
+#searchForm h1{
+    font-weight: 800;
+    font-size: 2.5rem;
+}
+
+#searchForm p{
+    color: var(--gray-text);
+    font-size: 1.2rem;;
+}
+
+#searchForm #submitsform {
+    padding: 0.7rem 0.8rem;
+    border: 1px solid var(--gray-line) ;
+    display: flex;
+    gap: 0.5rem;
+    width: 100%;
+    position: relative;
+}
+
+#submitsform #inputSearch {
+    
+    width: 100%;
+    padding: 1rem;
+    border: transparent;
+    border-radius: 5px;
+}
+
+#submitsform #searchBtn{
+    background-color: var(--primary);
+    color: var(--icon-text);
+    border: var(--section-border);
+    border-radius: 5px;
+    padding: 0.5rem;
+}

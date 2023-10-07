@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/header.css">
+    <link rel="stylesheet" href="styles/general.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@200&family=Noto+Sans:wght@300&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="headerBlue">
+            <a class="logo" href="#">GitHub Finder</a>
+        </div>        
+    </header>
+    <nav id="searchForm">
+        <h1>Search GitHub Users</h1>
+        <p>Enter a username to fetch a user profile and repos</p>
+        <form id="submitsform">
+            <input type="text" name="username" id="inputSearch">
+            <button type="submit" id="searchBtn" class="btn btn-success">Submit</button>
+        </form> 
+    </nav>
+    <main>
+
+        <article id = "profile">
+            <!-- 
+            <section class="overalProfile">
+                <div class="profile">
+                    <img src="" alt="userpicture">
+                    <a href=""><button>
+                        View Profile
+                    </button></a>
+                </div>
+                <div class="profileInfo">
+                    <div class="influence">
+                        <span class="publicRepos">Public Repos: </span>
+                        <span class="publicGists">Public Gists: </span>
+                        <span class="followers">Followers: </span>
+                        <span class="following">Following: </span>
+                    </div>
+                    <div class="personalInfo">
+                        <p class="company">Company: </p>
+                        <p class="website">Website/Blog: </p>
+                        <p class="location">Location: </p>
+                        <p class="memberSince">Member Since: </p>
+                    </div>
+                </div> 
+            </section> 
+        <div class="greenary">
+            <img src="http://ghchart.rshah.org/${user.login}" alt="user's greenary"> 
+        </div>            
+        -->
+    </article>
+
+        <section id="latestRepos">
+            <h2>Latest Repos</h2>
+            <ul id="repos">
+                <!-- <li class="repo">
+                    <span class="repoName"><a href="">dd</a></span>
+                    <div class="subscriber">
+                        <span class="stars">Stars: </span>
+                        <span class="watchers">Watchers: </span>
+                        <span class="forks">Forks: </span>
+                    </div>
+                </li> -->
+            </ul>
+        </section>
+    </main>
+    <footer>
+        <span class="copywriter">GitHub Finder &copy;</span>
+    </footer>
+    <script src="js/Github.js"></script> 
+    <script src="js/Ui.js"></script>
+    <script src="js/main.js"></script>
+
+</body>
+</html>
