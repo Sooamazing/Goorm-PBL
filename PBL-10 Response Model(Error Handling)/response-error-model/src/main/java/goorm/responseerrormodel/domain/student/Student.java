@@ -1,4 +1,4 @@
-package goorm.responseerrormodel.domain;
+package goorm.responseerrormodel.domain.student;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

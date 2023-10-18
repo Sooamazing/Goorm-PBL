@@ -5,13 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Stream;
 
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import goorm.responseerrormodel.domain.student.Student;
 
 @Repository
 // @RequiredArgsConstructor
@@ -29,13 +26,12 @@ public class StudentRepositoryImpl {
 		return new ArrayList<>(store.values());
 	}
 
-	public Student findByGrade(Integer grade) {
-		Student findStudent = store.get(grade);
+	public Optional<Student> findByGrade(Integer grade) {
 
 		// List<Student> allStudent = findAll();
 		// Optional<Student> findStudent = allStudent.stream().filter(one -> one.getGrade().equals(grade)).findAny();
 
-		return findStudent;
+		return Optional.ofNullable(store.get(grade));
 	}
 	public int size(){
 		return store.size();
