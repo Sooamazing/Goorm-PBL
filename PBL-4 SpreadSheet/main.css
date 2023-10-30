@@ -1,0 +1,49 @@
+:root {
+  box-sizing: border-box;
+  margin: 0.5em;
+  font-size: 1.5em;
+}
+
+input {
+  font-size: 1rem;
+}
+
+#exportBtn {
+  margin-bottom: 0.5em;
+  font-size: 1.5em;
+  background-color: skyblue;
+  border: 2px solid gray;
+  border-radius: 0.2em;
+  padding: 0.5em;
+  cursor: pointer;
+}
+#cellNavigation {
+  margin-bottom: 0.5em;
+  font-size: 1.5em;
+}
+
+/* cell */
+
+.cell-row {
+  /* flex가 아니면 화면에 맞춰서 셀이 아래로 내려가 열, 행이 맞지 않게 보임. */
+  display: flex;
+}
+.cell {
+  width: 5em;
+  border: 1px solid lightgray;
+  outline: none;
+}
+.cell:focus {
+  border: 1px solid black;
+}
+
+/* header */
+
+.cell.header {
+  text-align: center;
+  background-color: aliceblue;
+}
+
+.cell.header.active {
+  background-color: skyblue;
+}
