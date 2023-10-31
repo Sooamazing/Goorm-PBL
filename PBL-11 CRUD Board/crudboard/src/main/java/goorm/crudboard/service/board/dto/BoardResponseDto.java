@@ -1,5 +1,6 @@
 package goorm.crudboard.service.board.dto;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,15 +21,24 @@ public class BoardResponseDto {
 	private Long id;
 	private String title;
 	private String content;
+	private LocalDateTime createdDate;
+	private LocalDateTime lastModifiedDate;
 	//CommentResponseDto 반환하도록 정정해야 함. -> Entity로 했더니 무한 순환 경험 완료^_^!!!!!!!!
 	private List<CommentResponseDto> comments = new ArrayList<>();
 
 	public BoardResponseDto(BoardEntity boardEntity) {
+
 		this.id = boardEntity.getId();
 		this.title = boardEntity.getTitle();
 		this.content = boardEntity.getContent();
-		this.comments = boardEntity.getComments().stream().map(t -> new CommentResponseDto(t)).collect(Collectors.toList());
-	}
+		this.createdDate = boardEntity.getCreatedDate();
 
+		//... 이것도 set을 다 쓰라 했나? 프록시일 수 있으니? ... 찾아봐야 함...
+		this.setLastModifiedDate(lastModifiedDate);
+		this.comments = boardEntity.getComments()
+			.stream()
+			.map(t -> new CommentResponseDto(t))
+			.collect(Collectors.toList());
+	}
 
 }

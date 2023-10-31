@@ -2,6 +2,7 @@ package goorm.crudboard.controller.comment;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -35,7 +36,7 @@ public class CommentController {
 		return "redirect:/board/{boardId}";
 	}
 
-	@PutMapping("/{commentId}/update")
+	@PatchMapping("/{commentId}/update")
 	public String update(@PathVariable("boardId") Long boardId, @PathVariable("commentId") Long commentId,
 		@RequestBody CommentAddRequestDto commentAddRequestDto) {
 
@@ -46,7 +47,7 @@ public class CommentController {
 		return "redirect:/board/{boardId}";
 	}
 
-	@PutMapping("/{commentId}/delete")
+	@PatchMapping("/{commentId}/delete")
 	public String delete(@PathVariable("boardId") Long boardId
 		, @PathVariable("commentId") Long commentId) {
 

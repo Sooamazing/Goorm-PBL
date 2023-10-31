@@ -3,6 +3,8 @@ package goorm.crudboard.service.comment;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
 
 import goorm.crudboard.repository.comment.CommentRepository;
@@ -19,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 // @NoArgsConstructor // 왜 이게 있으면 안 될까? 빈 주입 관련일 거 같은데. 아 ... final?
 @RequiredArgsConstructor
+@Transactional
 public class CommentService {
 
 	private final BoardService boardService;
@@ -66,26 +69,29 @@ public class CommentService {
 		});
 
 		return new CommentResponseDto(commentEntity.get());
-
 	}
-
 
 
 	public CommentResponseDto delete(Long commentId) {
 
-		CommentEntity entity = findEntity(commentId);
-		entity.setDeleted(true);
-		entity.getBoard().deleteComment(entity);
+		CommentEntity commentEntity = findEntity(commentId);
+		commentEntity.setDeleted(true);
+
+		// 이거는 없어도 되는 건가?
+		// entity.getBoard().deleteComment(entity);
 
 		//...삭제가 안 되던 게... save를 안 해줘라니..!... 왜지? 변경 감지는 .. 아닌 건가?
 		//아... db에 날려야... 영속성 컨텍스트에 올라가나? ...
 		//엔티티에 날리는 건 안 되는??
-		commentRepository.save(entity);
+		// Transactional 안 해서임!!!
+		// commentRepository.save(entity);
 
-		return new CommentResponseDto(entity);
+		return new CommentResponseDto(commentEntity);
+
 	}
 
 	public CommentEntity findEntity(Long commentId) {
 		return commentRepository.findById(commentId).get();
 	}
+
 }

@@ -1,5 +1,6 @@
 package goorm.crudboard.service.board.entity;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,8 +12,11 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.Where;
+import org.springframework.data.annotation.LastModifiedDate;
 
+import goorm.crudboard.service.BaseEntity;
 import goorm.crudboard.service.comment.entity.CommentEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,7 +25,8 @@ import lombok.NoArgsConstructor;
 @Table
 @NoArgsConstructor
 @Getter
-public class BoardEntity {
+// @Where(clause = "isDeleted=false")
+public class BoardEntity extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,6 +37,8 @@ public class BoardEntity {
 	private boolean isDeleted;
 
 	// @JsonManagedReference
+
+	@BatchSize(size = 5)
 	@OneToMany(mappedBy="board", cascade = CascadeType.REMOVE)
 	private List<CommentEntity> comments = new ArrayList<>();
 
@@ -50,11 +57,15 @@ public class BoardEntity {
 		comment.setBoard(this);
 	}
 
-	public BoardEntity(String title, String content) {
+	public BoardEntity(String title, String content, LocalDateTime createDate, LocalDateTime lastModifiedDate) {
 		this.title = title;
 		this.content = content;
 		this.isDeleted = false;
 		this.comments = null;
+
+		//BaseEntity를 여기서 쓰는 게 맞나?
+		this.setCreatedDate(createDate);
+		this.setLastModifiedDate(lastModifiedDate);
 	}
 
 	public void setTitle(String title) {

@@ -1,5 +1,7 @@
 package goorm.crudboard.service.board.dto;
 
+import java.time.LocalDateTime;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,5 +15,6 @@ public class BoardUpdateDto {
 	private Long id;
 	private String title;
 	private String contents;
+	private LocalDateTime lastModifiedDate = LocalDateTime.now();
 
 }

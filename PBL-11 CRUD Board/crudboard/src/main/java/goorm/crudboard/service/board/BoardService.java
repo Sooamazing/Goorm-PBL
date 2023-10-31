@@ -6,34 +6,43 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import goorm.crudboard.repository.board.BoardRepository;
+import goorm.crudboard.repository.comment.CommentRepository;
 import goorm.crudboard.service.board.dto.BoardAddDto;
 import goorm.crudboard.service.board.dto.BoardListDto;
 import goorm.crudboard.service.board.dto.BoardResponseDto;
 import goorm.crudboard.service.board.dto.BoardUpdateDto;
 import goorm.crudboard.service.board.entity.BoardEntity;
 import goorm.crudboard.service.comment.dto.CommentResponseDto;
-import goorm.crudboard.service.comment.entity.CommentEntity;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional // 어떤  타입 애노테이션이 맞는지? javax 였나?
 public class BoardService {
 
 	private final BoardRepository boardRepository;
+	private final CommentRepository commentRepository;
 	// private final CommentService commentService;
 	// 아... 서로의 서비스를 바라보면 순환참조구나.
 
 	public BoardResponseDto save(BoardAddDto boardAddDto) {
 
 		BoardEntity boardEntity = new BoardEntity(
-			boardAddDto.getTitle(), boardAddDto.getContents());
+			boardAddDto.getTitle(), boardAddDto.getContent(), boardAddDto.getCreatedDate(), null);
+
+		log.info("=========boardEntity.getCreatedDate()={}", boardEntity.getCreatedDate());
 		boardRepository.save(boardEntity);
-		//comments 추가해야 함!
-		return new BoardResponseDto(boardEntity.getId(), boardEntity.getTitle(), boardEntity.getContent(), null);
+		BoardResponseDto boardResponseDto = new BoardResponseDto(boardEntity.getId(), boardEntity.getTitle(),
+			boardEntity.getContent(), boardEntity.getCreatedDate(), null, null);
+		log.info("boardResponseDto.getCreatedDate() ={}", boardResponseDto.getCreatedDate());
+		return boardResponseDto;
 	}
 
 	public BoardResponseDto update(BoardUpdateDto boardUpdateDto) {
@@ -56,6 +65,7 @@ public class BoardService {
 			if (boardUpdateDto.getContents() != null) {
 				t.setContent(boardUpdateDto.getContents());
 			}
+			t.setLastModifiedDate(boardUpdateDto.getLastModifiedDate());
 			this.boardRepository.save(t);
 
 		});
@@ -65,45 +75,54 @@ public class BoardService {
 	}
 
 	public BoardResponseDto delete(Long id) {
-		Optional<BoardEntity> boardEntity = boardRepository.findById(id);
+		BoardEntity boardEntity = boardRepository.findById(id).orElseThrow();
 
-		//orElseThrow로 처리해 보기.
-		if (boardEntity.isPresent()) {
-			boardEntity.get().setDeleted(true);
-		}
-		for(CommentEntity item:boardEntity.get().getComments() ){
-			item.setDeleted(true);
-		}
+		boardEntity.setDeleted(true);
+
+		// 하기 리스트를 대체
+		commentRepository.isDeleteCommentTrue(id);
+		// for(CommentEntity item:boardEntity.get().getComments() ){
+		// 	item.setDeleted(true);
+		// }
 
 		//근데 board는 save 안 했는데 어떻게 저장이 되지..?
 		// boardRepository.save(boardEntity.get());
-
 
 		// 이건 왜 안 되지? ㅠㅠㅠ
 		// boardEntity.get().getComments().stream()
 		// 			.map(c->c.setDeleted(true));
 
-		return new BoardResponseDto(boardEntity.get());
+		return new BoardResponseDto(boardEntity);
 	}
 
-	public List<BoardListDto> findAll() {
+	// public List<BoardListDto> findAll() {
+	//
+	// 	//엔티티 -> BoardListDto List로 변환해야 함!
+	// 	List<BoardListDto> boardEntityList = boardRepository.findAll()
+	// 		.stream()
+	// 		.filter(board -> board.isDeleted() == false)
+	// 		.map(t -> new BoardListDto(t.getId(), t.getTitle(), t.getCreatedDate(), t.getLastModifiedDate()))
+	// 		.collect(
+	// 			Collectors.toList());
+	//
+	// 	return boardEntityList;
+	// }
 
-		//엔티티 -> BoardListDto List로 변환해야 함!
-		List<BoardListDto> boardEntityList = boardRepository.findAll()
-			.stream()
-			.filter(board -> board.isDeleted() == false)
-			.map(t -> new BoardListDto(t.getId(), t.getTitle()))
-			.collect(
-				Collectors.toList());
+	public Page<BoardListDto> findAll(Pageable pageable) {
 
-		return boardEntityList;
+		Page<BoardEntity> boardEntityPage = boardRepository.findAll(pageable);
+		Page<BoardListDto> map = boardEntityPage
+			.map(
+			(t -> new BoardListDto(t.getId(), t.getTitle(), t.getCreatedDate(), t.getLastModifiedDate())));
+
+		return map;
 	}
 
 	public BoardResponseDto findOne(Long id) {
 
 		Optional<BoardEntity> boardEntity = boardRepository.findById(id);
 		BoardResponseDto boardResponseDto = new BoardResponseDto();
-		if(boardEntity.get().isDeleted()){
+		if (boardEntity.get().isDeleted()) {
 			return null;
 		}
 		// List<CommentResponseDto> commentResponseDtoList = commentService.findCommentResponseDto(
@@ -115,6 +134,8 @@ public class BoardService {
 			boardResponseDto.setId(boardEntity.get().getId());
 			boardResponseDto.setContent(boardEntity.get().getContent());
 			boardResponseDto.setTitle(boardEntity.get().getTitle());
+			boardResponseDto.setCreatedDate(boardEntity.get().getCreatedDate());
+			boardResponseDto.setLastModifiedDate(boardEntity.get().getLastModifiedDate());
 
 			List<CommentResponseDto> commentResponseDtoList = boardEntity.get()
 				.getComments()

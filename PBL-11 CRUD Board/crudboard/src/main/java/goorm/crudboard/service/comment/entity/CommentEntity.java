@@ -10,8 +10,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Where;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import goorm.crudboard.service.BaseEntity;
 import goorm.crudboard.service.board.entity.BoardEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,7 +23,8 @@ import lombok.NoArgsConstructor;
 @Table
 @Getter
 @NoArgsConstructor
-public class CommentEntity {
+// @Where(clause = "isDeleted=FALSE")
+public class CommentEntity extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
