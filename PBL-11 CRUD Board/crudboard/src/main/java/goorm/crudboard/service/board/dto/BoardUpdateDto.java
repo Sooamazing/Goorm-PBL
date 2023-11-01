@@ -5,16 +5,21 @@ import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@NoArgsConstructor
+// @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Setter //이게 있어야 파람에서 받는 게 맞지.. 그치...
 public class BoardUpdateDto {
 	private Long id;
 	private String title;
-	private String contents;
+	private String content;
+	// TODO: LocalDateTime.now(); 생성 안 해도 되나?
 	private LocalDateTime lastModifiedDate = LocalDateTime.now();
 
+	public BoardUpdateDto(Long boardId, BoardRequestDto boardRequestDto) {
+		this.id = boardId;
+		this.title = boardRequestDto.getTitle();
+		this.content = boardRequestDto.getContent();
+		this.lastModifiedDate = boardRequestDto.getCreatedDate();
+	}
 }

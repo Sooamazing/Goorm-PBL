@@ -63,6 +63,75 @@
 - TDD
 
 ## 기록
+
+### 배운 점, 개선 사항 등 우선 기록(Update ver. 11.1)
+- 전체적으로 dto, entity 생성 시 파라미터를 단순화하고, 코드 정리! 
+  - comment 컨트롤러는 전부 redirect 하기 때문에 service의 반환은 void로 설정
+  - 엔티티, requestbody 사용하는 dto 제외 @NoArgsConstructor 삭제
+    - AllArgs, getter 있으면 매핑 가능. -> 확인! 
+    - 게시글 서비스에서 댓글 서비스가 아니라 commentRepository를 바라보는 게 적절한 건지, Entity에서 하는 거랑 뭐가 다른 건지? 동작 과정 공부.
+  - Entity 이름 변경 -> 전부 변경되지만 직접 작성한 쿼리는 IDE가 자동으로 바꿔주지 않아 직접 수정해야 함!
+- 깃헙 문제 
+  - 디렉터리 ~/Documents/Goorm-PBL/PBL-11 CRUD Board이(가) Git 루트로 등록되었지만 거기에서 Git 저장소를 찾을 수 없습니다.
+  - 디렉토리 매핑에서 해당 루트 삭제, Goorm - PBL만 남김 
+  - 왜 이런 문제가 발생했지?
+- 수정, 생성 시간
+  - entity 생성 전에는, 수정, 생성 시간을 알 수 없어서 그 블로그에서 dto 받을 때부터 만들어 준 것 같은데, 실제로 그런지와(이용할 방법이 정말 없는 건지) 그렇게 할 정도로 유의미한가?에 대해 고민해 보기.
+  - BaseEntity의 내용을 super로 받아주는 방식이 일반적으로 맞는 건지? 어노테이션 사용하지 않는 경우!
+  - 추후: 어노테이션 사용해서 자동화로 만들기!
+- 경로 변경! -> 좀 더 Restful!
+  - 경로에 new, delete 등을 넣는 게 아니라 메서드로 알려주는 게 restful!
+  - soft-delete도 delete로! 상황마다 다르지만 수정 대개 put으로 한다고 해 put으로 재변경
+    - 이때, 같은 요청을 보낸다는 건, 수정 시간을 완전 동일하게 보내는 경우 서버에서 응답이 같아서 멱등성 보장이라는 의미일까? 아니면, 수정 시간이 달라지는 것도 멱등성 X인 걸까? (그럼 Patch겠지..?)
+- 프록시 사용해도 상관없도록 프로퍼티 접근법으로 이용하기!
+  - 이게 해당하는 경우가 언제였지? 생성자는 .. 필드에 접근하지만, 그 외는 다 그렇다는 거겠지?
+- entity와 값 객체에 setter 사용 지양! (for 불변성)
+  - [대신 메서드로 구현하는 법 참고](https://middleearth.tistory.com/11 )
+  - requestDto로 받아오는 곳에만 param의 boardId 등 매핑 위해 setter 한 개 정도 사용
+  - 값 객체는 값이 곧 객체이기 때문에 값이 변하면 새로 생성하는 게 맞음!
+- 컨트롤러 String → rediect: 붙이면 무조건 링크인 거고 아니면 view인 건가?
+- 서비스에서 Optional 처리
+  - throw 하면서 처리!! controller에 옵셔널 안 넘어가게!
+  - 검증, 에러 로직을 어디에 둘 건지!
+  - 기본 입력은 controller (null 등), 그 외 검증은 service ?
+- BoardResponseDto에서 CommentList를 CommentResponseDto로 변환하기
+  - 처음 생성 시 boardEntity의 CommentList가 null이라서 stream 불가
+  - [null값이 들어 있다고 알려주기](https://hides.kr/1098)
+  - [null 값을 기본값에 매핑](https://www.techiedelight.com/ko/filter-null-values-stream-java-8/)
+  - filter로 isDeleted true인 코멘트 제외
+- filter 사용법 배우기...!
+  - .map(c->c.setDeleted(true)); -> 이건 안 됨
+  - .filter(board -> board.isDeleted() == false) => 이건 됨
+- 페이징 List로 변환해 보여주기
+  - [List로 변환하는 간단한 방법 .getContent](https://velog.io/@myway00/Spring-Boot-%EC%97%90%EC%84%9C-Page-%EB%A5%BC-List-%EB%A1%9C-%EB%B0%94%EA%BE%B8%EA%B8%B0) 
+  - 왜 null, hasContent()를 둘 다 확인해야 하지?
+  - 추가) 페이징을 repository에서 구현하는 법..!!!! sort 등을 컨트롤러 파라미터 말고 구현! 파라미터에서 받는 건 동작 과정이 어떤지!
+  - 페이징하는 시점과 delete된 게 속해 있으면 어떻게 동작하는지, 방지하려면 어떤 단계에서 하는 게 좋은지 등. 방식 비교하기.
+- N+1, 댓글 삭제된 거 그대로 보이는 문제
+  - comment
+    - commentEntity 메서드 정정! 메서드에서 BoardEntity의 comment리스트를 변경해 줬는데, 전혀 필요없는 행위였음! -> comment가 주인이기 때문에, board에서 바꾼 건 바꿔도 반영되지 않음!!!!! 
+    - boardEntity와 commentRepository에 둘 다 저장 -> 이게 맞는지, boardEntity의 commentList를 변경하는 건 아무짝에도 쓸모 없는 게 맞는지.
+    - 댓글 삭제 시에도 board의 comment list에서 remove 하는 방식으로 구현해서 isDeleted True여도 그대로 보였던 것! 이는 responseDto에서 filter 한 번 해 주는 것으로 해결
+    - entity의 정보에는 일부만 들어있다거나 하면 안 됨!!!! 권장 X. 
+    - 서비스에서 dto로 반환 혹은 [리포지토리에서 dto로 반환](https://velog.io/@youmakemesmile/Spring-Data-JPA-JPQL-사용-방법Query-nativeQuery-DTO-Mapping-function)([쿼리dsl 사용](https://doing7.tistory.com/129)) 등 상황에 따라 선택.
+      - 리포지토리에서는 혹여나 서비스가 크고, 삭제한 게 굉장히 많은 경우 등 db에서 전부 가져와서 필터링하는 게 더 비효율인 경우, 리포지토리에서 dto로 바로 반환하는 방식 고려
+  - 이렇게 쓰면 안 됨...!!!! => 엔티티의 속성 중 일부가 비어 있기 때문에 권장 X => 전체를 가져와서 filter! => 이해한 내용 맞는지 재확인! + 다른 방식에 대해서도 공부!
+  ```java
+  @Query("select b from BoardEntity b left join fetch b.comments c where b.id= :boardId and c.isDeleted = false")
+	// @Override
+	Optional<BoardEntity> findByIdAndComment(@Param("boardId") Long boardId);
+  ```
+  - Override한 jpa 기본 메서드에 쿼리 어노테이션 사용해서 바꿔도 되는지
+  - 기본적인 동작 과정과 상기 경우 동작 과정 (우선 순위 등)
+- 추후 삭제한 거 삭제해 달라고 하면 안 된다고 하는 validation 구현.
+  - 삭제한 내용 재삭제, 수정, 게시글은 하위에 댓글 관련 수정 모두 불가하도록! -> 이유: modifiedDate가 바뀌기 때문에 아예 막아야 함.
+  - 삭제된 게시글 아래의 댓글에 관한 검증이 유의미한가? -> 한 개씩 타고타고 왔다면 게시글 조회부터 막혔을 테지만, url로 들어온 거라면 삭제된 게시글의 조회 검증을 뛰어 넘고 들어오게 되는 거겠지? 맞나..? 그러면 .. 필요한 거겠지? 근데 그러면 boardEntity를 가져 오기 위해 쿼리가 두 번 나가야 할 거 같은데, 이게 맞는지? 다른 방식이 있는지?
+- JoinColumn → 안 달아도 되는지? 외래 키 설정인데, 이거 안 하고 해도 되긴 했음.... 왜지?
+  - @JoinColumn(name="board_id") -> name에 이렇게 해당 엔티티의 컬럼명만 써도 되는 건 어노테이션이 붙는 엔티티에서 찾기 때문!
+- @Table 엔티티 붙는 게 맞는지? 
+- comment 생성 시 board를 직접 넣어주는 게 맞는지? 다른 좋은 방식이 있을지?
+- 인덱스.. 공부해 보기!
+
 ### 배운 점 등 우선 기록(Update ver. 10.31)
 - update, soft delete 
   - http 메서드 변경(put -> patch)

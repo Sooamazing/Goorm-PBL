@@ -1,6 +1,7 @@
 package goorm.crudboard.service.comment.dto;
 
-import goorm.crudboard.service.board.dto.BoardResponseDto;
+import java.time.LocalDateTime;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,9 +9,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class CommentAddDto {
+public class CommentRequestDto {
 
 	private Long boardId;
 	private String content;
+	private LocalDateTime createdDate = LocalDateTime.now();
 
+	public void setBoardId(Long boardId) {
+		this.boardId = boardId;
+	}
 }
